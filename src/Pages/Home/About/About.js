@@ -1,8 +1,10 @@
 import React from 'react';
 import person from '../../../assets/images/about_us/person.jpg';
 import parts from '../../../assets/images/about_us/parts.jpg';
+import useTitle from '../../../hooks/useTitle';
 
 const About = () => {
+    useTitle('About');
     return (
         <div className="hero my-20">
             <div className="hero-content flex-col lg:flex-row">

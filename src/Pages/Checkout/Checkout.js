@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import useTitle from '../../hooks/useTitle';
 
 const Checkout = () => {
+
+    useTitle('Checkout');
     const { _id, title, price, img } = useLoaderData();
     const { user } = useContext(AuthContext);
 
@@ -27,7 +30,8 @@ const Checkout = () => {
         fetch('http://localhost:5000/orders', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('user-access-token')}`
             },
             body: JSON.stringify(order)
         })
