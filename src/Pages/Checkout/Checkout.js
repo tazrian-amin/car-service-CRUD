@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 import useTitle from '../../hooks/useTitle';
 
@@ -8,6 +8,7 @@ const Checkout = () => {
     useTitle('Checkout');
     const { _id, title, price, img } = useLoaderData();
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handlePlaceOrder = event => {
         event.preventDefault();
@@ -42,6 +43,7 @@ const Checkout = () => {
                     alert('Order Placed Successfully!');
                 }
                 form.reset();
+                navigate('/orders');
             })
     }
 

@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { setAuthToken } from '../../api/auth';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 import useTitle from '../../hooks/useTitle';
+import SocialLogin from './SocialLogin';
 
 const Login = () => {
 
@@ -21,23 +23,7 @@ const Login = () => {
         login(email, password)
             .then(res => {
                 const user = res.user;
-                const currentUser = {
-                    email: user.email
-                };
-
-                fetch('https://car-server-tau.vercel.app/jwt', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(currentUser)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data);
-                        localStorage.setItem('user-access-token', data.token);
-                    })
-
+                setAuthToken(user);
                 alert('Logged In Successfully!');
                 form.reset();
                 navigate(from, { replace: true });
@@ -79,6 +65,7 @@ const Login = () => {
                         <div className="form-control mt-6">
                             <input className="btn btn-warning" type="submit" value="Login" />
                         </div>
+                        <SocialLogin></SocialLogin>
                     </form>
                     <p className='text-center'>New to Genius Car? <Link to='/signup' className='text-orange-600 font-bold my-5'>Signup</Link></p>
                 </div>
